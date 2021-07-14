@@ -23,9 +23,11 @@ for (const link of links) {
 //sombra da pagina quando ele ser um scroll
 
 const height = document.querySelector('header')
-const navHeight = header.offsetHeight
 
-window.addEventListener('scroll', function () {
+function changeHeaderWhenScroll() {
+  const height = document.querySelector('header')
+  const navHeight = header.offsetHeight
+
   if (window.scrollY >= navHeight) {
     //quando o scroll é maior que a altur do header
     header.classList.add('scroll') //coloca no header a classe scroll
@@ -33,7 +35,7 @@ window.addEventListener('scroll', function () {
     //menor que a altura do header
     header.classList.remove('scroll') //remove a classe scroll do header
   }
-})
+}
 
 //montando o slide de depoimentos
 
@@ -44,4 +46,42 @@ const swiper = new Swiper('.swiper-container', {
   },
   mousewheel: true,
   keyboard: true
+})
+
+//ScrollReveal = mostrar os objetos da pagina quando der um scroll
+
+const scrollReveal = ScrollReveal({
+  origin: 'top',
+  distance: '30px',
+  duration: 600,
+  reset: true
+})
+
+scrollReveal.reveal(
+  `
+#home .text, #home .image,
+#about .text, #about .image,
+#services header, #services .card,
+#testimonials header, #testimonials .testimonial  
+#contact.text, #contact .links,
+footer .brand, footer .social
+`,
+  { interval: 100 }
+)
+
+//botao de back- to-top
+function backToTop() {
+  const backToTopButton = document.querySelector('.back-to-top')
+
+  if (window.scrollY >= 560) {
+    backToTopButton.classList.add('show')
+  } else {
+    backToTopButton.classList.remove('show')
+  }
+}
+
+//when Scroll
+window.addEventListener('scroll', function () {
+  changeHeaderWhenScroll()
+  backToTop()
 })
